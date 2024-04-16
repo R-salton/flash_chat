@@ -1,7 +1,9 @@
+import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+  static String id  = "login";
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -112,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/registration');
+                      Navigator.pushNamed(context, RegistrationScreen.id);
                     },
                     child: const Text(
                       "Signup",
