@@ -11,7 +11,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xff0b2c5b),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -29,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onChanged: (value) {
                 //Do something with the user input.
               },
+              style: const TextStyle(color: Colors.white),
               decoration: const InputDecoration(
                 hintText: 'Enter your email',
                 contentPadding:
@@ -55,6 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onChanged: (value) {
                 //Do something with the user input.
               },
+              style: const TextStyle(color: Colors.white),
               decoration: const InputDecoration(
                 hintText: 'Enter your password.',
                 contentPadding:
@@ -115,8 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: const Text(
                       "Signup",
                       style: TextStyle(
-                          color: Colors.lightBlueAccent,
-                          fontWeight: FontWeight.bold),
+                          color: Colors.yellow, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],

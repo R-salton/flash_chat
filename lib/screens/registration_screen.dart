@@ -11,7 +11,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xff164d87),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -29,6 +29,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               onChanged: (value) {
                 //Do something with the user input.
               },
+              style: const TextStyle(color: Colors.white),
               decoration: const InputDecoration(
                 hintText: 'Enter your email',
                 contentPadding:
@@ -53,6 +54,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               onChanged: (value) {
                 //Do something with the user input.
               },
+              style: const TextStyle(color: Colors.white),
               decoration: const InputDecoration(
                 hintText: 'Enter your password',
                 contentPadding:
@@ -99,7 +101,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   const Text(
                     "Already have an account?",
                     style: TextStyle(
-                        color: Colors.blueAccent, fontWeight: FontWeight.bold),
+                        color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     width: 10,
@@ -111,8 +113,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     child: const Text(
                       "login",
                       style: TextStyle(
-                          color: Colors.blueAccent,
-                          fontWeight: FontWeight.bold),
+                          color: Colors.yellow, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
