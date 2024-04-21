@@ -1,7 +1,9 @@
-import 'package:flash_chat/constants.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flash_chat/utilities/constants.dart';
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flash_chat/utilities/components.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -25,7 +27,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     );
     // animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
     controller.forward();
-    animation = ColorTween(begin: Colors.blueAccent, end: kBackgroundDarkBlue).animate(controller);
+    animation = ColorTween(begin: Colors.blueAccent, end: kBackgroundDarkBlue)
+        .animate(controller);
 
     // animation.addStatusListener((status) {
     //   if (status == AnimationStatus.completed) {
@@ -65,57 +68,36 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     child: Image.asset('images/logo.png'),
                   ),
                 ),
-                const Text(
-                  'Flash Chat',
-                  style: TextStyle(
+                // ignore: deprecated_member_use
+                TypewriterAnimatedTextKit(
+                  speed: const Duration(milliseconds: 250),
+                  text: const [
+                    'Flash Chat',
+                  ],
+                  textStyle: const TextStyle(
                       fontSize: 45.0,
                       fontWeight: FontWeight.w900,
-                      color: Colors.lightBlue),
+                      color: Colors.white),
                 ),
               ],
             ),
             const SizedBox(
               height: 48.0,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
-                elevation: 5.0,
-                color: Colors.lightBlueAccent,
-                borderRadius: BorderRadius.circular(30.0),
-                child: MaterialButton(
-                  onPressed: () {
-                    //Go to login screen.
-
-                    Navigator.pushNamed(context, LoginScreen.id);
-                  },
-                  minWidth: 200.0,
-                  height: 42.0,
-                  child: const Text(
-                    'Log In',
-                  ),
-                ),
-              ),
+            myButton(
+              onPressed: () {
+                Navigator.pushNamed(context, LoginScreen.id);
+              },
+              backgroundColor: kLightBlue,
+              title: "Login",
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
-                color: Colors.blueAccent,
-                borderRadius: BorderRadius.circular(30.0),
-                elevation: 5.0,
-                child: MaterialButton(
-                  onPressed: () {
-                    //Go to registration screen.
-                    Navigator.pushNamed(context, RegistrationScreen.id);
-                  },
-                  minWidth: 200.0,
-                  height: 42.0,
-                  child: const Text(
-                    'Register',
-                  ),
-                ),
-              ),
-            ),
+            myButton(
+              onPressed: () {
+                Navigator.pushNamed(context, RegistrationScreen.id);
+              },
+              backgroundColor: kBlueScent,
+              title: "Register",
+            )
           ],
         ),
       ),

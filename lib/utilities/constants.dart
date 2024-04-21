@@ -19,3 +19,5 @@ const kMessageContainerDecoration = BoxDecoration(
 );
 
 const kBackgroundDarkBlue = Color(0xff0b2c5b);
+const kLightBlue = Colors.lightBlueAccent;
+const kBlueScent = Colors.blueAccent;
