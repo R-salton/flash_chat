@@ -4,10 +4,21 @@ import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
   SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+  );
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
+    apiKey: "AIzaSyBCK3OZDZ4SuMiuRCWEHIrYDiEyY_biDQQ",
+    appId: "1:911784027355:android:cb9f23de7ab052e91618fe",
+    messagingSenderId: "911784027355",
+    projectId: "flash-chat-a65f7",
+  ));
+
   runApp(const FlashChat());
 }
 

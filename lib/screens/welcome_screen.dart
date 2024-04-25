@@ -21,6 +21,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   void initState() {
     // TODO: implement initState
     super.initState();
+    
     controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
@@ -48,6 +49,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     controller.dispose();
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
