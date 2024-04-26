@@ -22,19 +22,18 @@ class _ChatScreenState extends State<ChatScreen> {
     getUser();
   }
 
-  void getUser() async{
+  void getUser() async {
     try {
-      final user = await _auth.currentUser;
+      final user = _auth.currentUser;
       if (user != null) {
         loggedInUser = user;
         print(loggedInUser.email);
       }
-      
     } catch (e) {
       print(e);
     }
-
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,9 +41,11 @@ class _ChatScreenState extends State<ChatScreen> {
         leading: null,
         actions: <Widget>[
           IconButton(
-              icon: const Icon(Icons.close),
+              icon: const Icon(Icons.logout),
               onPressed: () {
                 //Implement logout functionality
+                _auth.signOut();
+                Navigator.pop(context);
               }),
         ],
         title: const Text('⚡️Chat'),

@@ -1,6 +1,8 @@
+import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flash_chat/utilities/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,6 +13,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _auth = FirebaseAuth.instance;
+  bool showSpinner = false;
 
   String email = '';
   String password = "";
@@ -35,25 +39,28 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 48.0,
             ),
             TextField(
-              textAlign: TextAlign.center,
+                textAlign: TextAlign.center,
                 keyboardType: TextInputType.emailAddress,
                 onChanged: (value) {
                   //Do something with the user input.
                   email = value;
                 },
                 style: const TextStyle(color: Colors.white),
-                decoration: kInputDecoration.copyWith(hintText: "Enter your email")),
+                decoration:
+                    kInputDecoration.copyWith(hintText: "Enter your email")),
             const SizedBox(
               height: 8.0,
             ),
             TextField(
               textAlign: TextAlign.center,
+              obscureText: true,
               onChanged: (value) {
                 //Do something with the user input.
                 password = value;
               },
               style: const TextStyle(color: Colors.white),
-              decoration: kInputDecoration.copyWith(hintText: "Enter your password"),
+              decoration:
+                  kInputDecoration.copyWith(hintText: "Enter your password"),
             ),
             const SizedBox(
               height: 24.0,
@@ -65,8 +72,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 borderRadius: const BorderRadius.all(Radius.circular(30.0)),
                 elevation: 5.0,
                 child: MaterialButton(
-                  onPressed: () {
+                  onPressed: () async {
                     //Implement login functionality.
+
+                    try {
+                      final user = await _auth.signInWithEmailAndPassword(
+                          email: email, password: password);
+                      // ignore: unnecessary_null_comparison
+                      if (user != null) {
+                        Navigator.pushNamed(context, ChatScreen.id);
+                      }
+                    } catch (e) {
+                      print(e);
+                    }
                   },
                   minWidth: 200.0,
                   height: 42.0,
