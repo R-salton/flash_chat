@@ -5,7 +5,6 @@ import 'package:flash_chat/utilities/constants.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
   static String id = "chat_screen";
@@ -16,7 +15,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final _auth = FirebaseAuth.instance;
-  final _firestore = FirebaseFirestore.instance ;
+  final _firestore = FirebaseFirestore.instance;
   var loggedInUser;
   bool showSpinner = false;
   String textMessage = '';
@@ -39,6 +38,14 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  void streamMessages() async {
+    await for (var snapshot in _firestore.collection('messages').snapshots()) {
+      for (var message in snapshot.docs) {
+        print(message.data());
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,15 +55,16 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: const Icon(Icons.logout),
               onPressed: () {
-                setState(() {
-                  showSpinner = true;
-                });
-                //Implement logout functionality
-                _auth.signOut();
-                Navigator.pop(context);
-                setState(() {
-                  showSpinner = false;
-                });
+                // setState(() {
+                //   showSpinner = true;
+                // });
+                // //Implement logout functionality
+                // _auth.signOut();
+                // Navigator.pop(context);
+                // setState(() {
+                //   showSpinner = false;
+                // });
+                streamMessages();
               }),
         ],
         title: const Text('⚡️Chat'),
@@ -76,6 +84,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   children: <Widget>[
                     Expanded(
                       child: TextField(
+                        style: const TextStyle(color: Colors.white),
                         onChanged: (value) {
                           //Do something with the user input.
                           textMessage = value;
@@ -87,14 +96,13 @@ class _ChatScreenState extends State<ChatScreen> {
                       onPressed: () {
                         //Implement send functionality.
                         try {
-                           _firestore.collection('messages').add(
-                              {'sender': loggedInUser.email, 'text': textMessage});
-                          
+                          _firestore.collection('messages').add({
+                            'sender': loggedInUser.email,
+                            'text': textMessage
+                          });
                         } catch (e) {
                           print(e);
-                          
                         }
-                       
                       },
                       child: const Text(
                         'Send',
