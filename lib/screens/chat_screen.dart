@@ -1,3 +1,5 @@
+import 'dart:js_interop';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flash_chat/utilities/components.dart';
@@ -28,6 +30,7 @@ class _ChatScreenState extends State<ChatScreen> {
     // TODO: implement initState
     super.initState();
     getUser();
+    getMessage();
   }
 
   void getUser() async {
@@ -45,6 +48,19 @@ class _ChatScreenState extends State<ChatScreen> {
     await for (var snapshot in _firestore.collection('messages').snapshots()) {
       for (var message in snapshot.docs) {
         print(message.data());
+      }
+    }
+  }
+
+  void getMessage() async {
+    // final messages = await _firestore.collection('message').get();
+
+    // for (var message in messages.docs) {
+    //   print(message);
+    // }
+    await for (var snapshot in _firestore.collection('message').snapshots()) {
+      for (var messages in snapshot.docs) {
+        print(messages.data());
       }
     }
   }
@@ -68,7 +84,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 // setState(() {
                 //   showSpinner = false;
                 // });
-                streamMessages();
+                // streamMessages();
+                getMessage();
               }),
         ],
         title: const Text('⚡️Chat'),

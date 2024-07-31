@@ -3,12 +3,13 @@ import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/utilities/components.dart';
+  
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
-  static String id = " registration";
+  static String id = "registration";
 
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
