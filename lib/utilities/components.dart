@@ -35,30 +35,42 @@ class myButton extends StatelessWidget {
 }
 
 class MessageBubble extends StatelessWidget {
-  const MessageBubble({super.key, this.message, this.sender});
+  const MessageBubble({super.key, this.message, this.sender, this.isMe});
   final message;
   final sender;
+  final isMe;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment:
+            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Text(
             sender,
             style: const TextStyle(fontSize: 12.0, color: Colors.grey),
           ),
           Material(
-            borderRadius: BorderRadius.circular(30.0),
-            color: Colors.blueGrey,
+            borderRadius: isMe
+                ? const BorderRadius.only(
+                    topLeft: Radius.circular(30.0),
+                    bottomLeft: Radius.circular(30.0),
+                    bottomRight: Radius.circular(30.0))
+                : const BorderRadius.only(
+                    topRight: Radius.circular(30),
+                    bottomRight: Radius.circular(30.0),
+                    bottomLeft: Radius.circular(30.0)),
+            color: isMe ? (Colors.blueGrey) : Colors.white,
             elevation: 5.0,
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
               child: Text(
                 "$message ",
-                style: const TextStyle(fontSize: 15.0),
+                style: TextStyle(
+                    fontSize: 15.0,
+                    color: isMe ? Colors.white : Colors.black87),
               ),
             ),
           ),

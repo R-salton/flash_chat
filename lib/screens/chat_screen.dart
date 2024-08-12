@@ -1,7 +1,5 @@
-import 'dart:js_interop';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flash_chat/utilities/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/utilities/constants.dart';
@@ -9,6 +7,7 @@ import "package:firebase_auth/firebase_auth.dart";
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 final _firestore = FirebaseFirestore.instance;
+final _auth = FirebaseAuth.instance;
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -19,7 +18,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final _auth = FirebaseAuth.instance;
   final messageController = TextEditingController();
   var loggedInUser;
   bool showSpinner = false;
@@ -41,14 +39,6 @@ class _ChatScreenState extends State<ChatScreen> {
       }
     } catch (e) {
       print(e);
-    }
-  }
-
-  void streamMessages() async {
-    await for (var snapshot in _firestore.collection('messages').snapshots()) {
-      for (var message in snapshot.docs) {
-        print(message.data());
-      }
     }
   }
 
@@ -121,6 +111,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         onPressed: () {
                           //Implement send functionality.
                           messageController.clear();
+
                           try {
                             _firestore.collection('messages').add({
                               'sender': loggedInUser.email,
@@ -157,22 +148,23 @@ class MessageStream extends StatelessWidget {
         stream: _firestore.collection('messages').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            final messages = snapshot.data?.docs;
+            final messages = snapshot.data?.docs.reversed;
 
             List<MessageBubble> messageBubbles = [];
             for (var message in messages!) {
               final messageText = message['text'];
               final messageSender = message["sender"];
+              final user = _auth.currentUser?.email == messageSender;
+
               final messageBubble = MessageBubble(
-                sender: messageSender,
-                message: messageText,
-              );
+                  sender: messageSender, message: messageText, isMe: user);
 
               messageBubbles.add(messageBubble);
             }
 
             return Expanded(
               child: ListView(
+                reverse: true,
                 children: messageBubbles,
               ),
             );
